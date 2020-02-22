@@ -1,23 +1,30 @@
-CREATE TABLE Bijzonderheid (
+CREATE TABLE IDF (
     attribuut VARCHAR(15),
     waarde VARCHAR(30),
     idf real,
     PRIMARY KEY (attribuut, waarde)
 );
 
-CREATE TABLE Dichtheid (
+CREATE TABLE Hidf (
     attribuut VARCHAR(15),
     bandbreedte real,
 
     PRIMARY KEY (attribuut)
 );
 
-CREATE TABLE Frequentie (
+CREATE TABLE QF (
     attribuut VARCHAR(15),
     waarde VARCHAR(30),
     qf real,
     
     PRIMARY KEY (attribuut, waarde)
+);
+
+CREATE TABLE Hqf (
+    attribuut VARCHAR(15),
+    bandbreedte real,
+
+    PRIMARY KEY (attribuut)
 );
 
 CREATE TABLE FrequentieA (
@@ -27,7 +34,7 @@ CREATE TABLE FrequentieA (
     PRIMARY KEY (attribuut)
 );
 
-CREATE TABLE Similarity (
+CREATE TABLE Jaccard (
     attribuut VARCHAR(15),
     term1 VARCHAR(25),
     term2 VARCHAR(25),

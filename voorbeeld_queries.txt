@@ -1,0 +1,18 @@
+weight = 6000  -> Wordt afgerond naar 5000, sorteert tupels aflopend op gewicht.
+weight = 3000  -> Sorteer tupels aflopend op absolute afstand tot gewicht
+
+brand='nissan' -> Eerst Nissan, door gelijke Jaccard scores komen Toyota, Honda en Subaru auto's door elkaar erna. Deze worden geordend door de missende attributen
+
+k = 50, brand='mercury', type='sedan' 
+    -> sedan mercuries, dan
+       stationwagon mercuries ( Jac(sedan, stationwagon) is hoog) dan
+       ford sedan             ( Jac(ford, mercury) is hoog)dan
+       ford stationwagen      (verschil in idf score)
+       resterende mercuries 
+       resterende fords
+
+k = 20, brand = 'ford', cylinders = 6, weight=3092 
+    -> cylinders zijn 6, gewicht zit rond 3100, merken zijn ford of merken met hoge Jac(ford, __)  
+
+
+

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAR1.Properties
+namespace Practicum1.Properties
 {
 
 

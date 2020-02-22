@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace DAR1 
-{
+namespace Practicum1 {
+
 public static class Parser
 {
 
-public static Dictionary<string, string> parse_zoekopdracht(string q)
+public static Dictionary<string, string> parse_query(string q)
 {
     string[] invoer = q.Split(',');
     int n = invoer.Length;
-    Dictionary<string,string> condities = new Dictionary<string, string>();
+    Dictionary<string,string> C = new Dictionary<string, string>();
 
     for (int i = 0; i < n; i++)
     {
         string[] s = invoer[i].Split('=');
-        condities[s[0].Trim()] = s[1].Trim(" ';".ToCharArray());
+        C[s[0].Trim()] = s[1].Trim(" ';".ToCharArray());
     }
 
-    return condities;
+    return C;
 }
+
 
 public static void parse_workload(string bestandsnaam, Dictionary<string, Dictionary<string, int>> map, Dictionary<string, Dictionary<Tuple<string, string>, int>> in_map)
 {
-    StreamReader stream = new StreamReader("../../../res/workload.txt");
+    StreamReader stream = new StreamReader("../../data/workload.txt");
 
     string regel = stream.ReadLine();
     int n = int.Parse(regel.Split(' ')[0]);
@@ -42,7 +43,7 @@ public static void parse_workload(string bestandsnaam, Dictionary<string, Dictio
 
         foreach(var v in voorwaarden)
         {
-            if (v.Contains("="))
+            if (v.Contains("=")) // attribuut = waarde
             {
                 string[] xs = v.Split(new char[] { '=' }, 2);
 
@@ -56,7 +57,7 @@ public static void parse_workload(string bestandsnaam, Dictionary<string, Dictio
                     map[attr][waarde] += qf;
                 else map[attr][waarde] = qf;
             }
-            else
+            else // IN clausule
             {
                 string[] xs = v.Split(new string[] { "IN" }, StringSplitOptions.None);
                 string attr = xs[0].Trim();
@@ -67,22 +68,22 @@ public static void parse_workload(string bestandsnaam, Dictionary<string, Dictio
 
                 foreach(string w in waarden)
                 {
-                    if (map[attr].ContainsKey(w))
-                         map[attr][w] += qf;
-                    else map[attr][w]  = qf;
+                    voeg_toe(map[attr], w, qf);
 
                     foreach(string t in waarden)
-                    {
-                        var T  = Tuple.Create(w, t);
-                        if (in_map[attr].ContainsKey(T)) in_map[attr][T] += qf;
-                        else                             in_map[attr][T]  = qf;
-                    }
+                        voeg_toe(in_map[attr], Tuple.Create(w, t), qf);
                 }
             }
         }
     }
 }
 
+public static void voeg_toe<T>(IDictionary<T, int> map, T key, int v)
+{
+    if (map.ContainsKey(key))
+         map[key] += v;
+    else map[key]  = v;
+}
 
 }
 }
